@@ -1,0 +1,13 @@
+.barra{
+    background: #004b7cda!important;
+    
+}
+
+.cursor{
+    cursor: pointer;
+    color: white;
+}
+
+.text-decorator-none{
+    text-decoration: none;
+}

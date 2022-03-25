@@ -1,11 +1,25 @@
-.titulo{
-    color: blue;
-    text-align: center;
-}
-
 .img{
     width: 250px;
     height: 150px;
     display: block;
     margin: 0 auto;
+}
+
+.corpo{
+    background: #92512b4f!important;
+}
+
+.botao{
+    background-color: #f74c09b2!important;
+    color: rgb(255, 255, 255)!important;
+    border: 1px solid #ce455e!important;    
+}
+
+.titulo{
+    color: white!important;
+    font-weight: bold!important;
+}
+
+.postagem{
+    background-color: #92512b4f!important;
 }

@@ -1,0 +1,23 @@
+.imagem2{
+    background-image: url(https://i.ibb.co/80B9qwL/Profile-pic-pana.png);
+    background-repeat: no-repeat;
+    width: 100vh;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.textos2{
+    font-weight: bold !important;
+}
+
+.btnCancelar{
+    margin-right: 20px !important;
+    background-color: #f74c09b2!important;
+    color: rgb(255, 255, 255)!important;
+    border: 1px solid #ce455e!important;   
+}
+
+.body{
+    background: #92512b4f!important;
+}

@@ -15,12 +15,17 @@ function Navbar() {
                         </Typography>
                     </Box>
 
+
                     <Box display="flex" justifyContent="start">
-                        <Box mx={5} className='cursor'>
-                            <Typography variant="h6" color="inherit">
-                                Home
-                            </Typography>
-                        </Box>
+                        
+                        <Link to='/home' className='text-decorator-none'>
+                            <Box mx={5} className='cursor'>
+                                <Typography variant="h6" color="inherit">
+                                    Home
+                                </Typography>
+                            </Box>
+                        </Link>
+
                         <Box mx={5} className='cursor'>
                             <Typography variant="h6" color="inherit">
                                 Postagens

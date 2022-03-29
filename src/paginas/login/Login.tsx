@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { Grid, Box, Typography, TextField, Button } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import useLocalStorage from 'react-use-localstorage';
-import { api } from '../../service/Service';
+import { login } from '../../service/Service';
 import UserLogin from '../../model/UserLogin';
 import './Login.css';
 
@@ -11,17 +11,17 @@ function Login() {
     const [token, setToken] = useLocalStorage('token');
     const [userLogin, setUserLogin] = useState<UserLogin>({
         id: 0,
-        usuario: "",
-        senha: "",
-        foto: "",
-        nome: "",
-        token: ""
+        nome: '',
+        usuario: '',
+        senha: '',
+        foto: '',
+        token: ''
     })
 
     function updatedModel(e: ChangeEvent<HTMLInputElement>) {
         setUserLogin({
             ...userLogin,
-            [e.target.name]: e.target.name
+            [e.target.name]: e.target.value
         })
     }
 
@@ -34,8 +34,7 @@ function Login() {
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
-            const resposta = await api.post(`/usuarios/logar`, userLogin)
-            setToken(resposta.data.token)
+            await login(`/usuarios/login`, userLogin, setToken)
 
             alert('Usuário logado com sucesso!');
         } catch (error) {
@@ -44,15 +43,15 @@ function Login() {
     }
 
     return (
-        <Grid container direction='row' justifyContent='center' alignItems='center' className='entrar'>
+        <Grid container direction='row' justifyContent='center' alignItems='center'>
             <Grid alignItems='center' xs={6}>
                 <Box paddingX={20}>
-                    <form onSubmit={onSubmit}>
-                        <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos1'>Entrar</Typography>
+                <form onSubmit={onSubmit}>
+                        <Typography variant='h3' gutterBottom color='textPrimary' component='h3' className='textos1'>Entrar</Typography>
                         <TextField value={userLogin.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='usuario' label='usuário' variant='outlined' name='usuario' margin='normal' fullWidth />
                         <TextField value={userLogin.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth />
                         <Box marginTop={2} textAlign='center'>
-                            <Button type='submit' variant='contained' color='primary'>
+                            <Button className='botao' type='submit' variant='contained' color='primary'>
                                 Logar
                             </Button>
                         </Box>
@@ -64,7 +63,7 @@ function Login() {
                         <Link to='/cadastrousuario'>
                             <Typography variant='subtitle1' gutterBottom align='center' className='textos1'>Cadastre-se</Typography>
                         </Link>
-                            
+
                     </Box>
                 </Box>
             </Grid>

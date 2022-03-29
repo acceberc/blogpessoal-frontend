@@ -17,7 +17,7 @@ function Navbar() {
 
 
                     <Box display="flex" justifyContent="start">
-                        
+
                         <Link to='/home' className='text-decorator-none'>
                             <Box mx={5} className='cursor'>
                                 <Typography variant="h6" color="inherit">
@@ -26,21 +26,28 @@ function Navbar() {
                             </Box>
                         </Link>
 
-                        <Box mx={5} className='cursor'>
-                            <Typography variant="h6" color="inherit">
-                                Postagens
-                            </Typography>
-                        </Box>
-                        <Box mx={5} className='cursor'>
-                            <Typography variant="h6" color="inherit">
-                                Temas
-                            </Typography>
-                        </Box>
+                        <Link to='/posts' className='text-decorator-none'>
+                            <Box mx={5} className='cursor'>
+                                <Typography variant="h6" color="inherit">
+                                    Postagens
+                                </Typography>
+                            </Box>
+                        </Link>
+
+                        <Link to='/temas' className='text-decorator-none'>
+                            <Box mx={5} className='cursor'>
+                                <Typography variant="h6" color="inherit">
+                                    Temas
+                                </Typography>
+                            </Box>
+                        </Link>
+
                         <Box mx={5} className='cursor'>
                             <Typography variant="h6" color="inherit">
                                 Novos temas
                             </Typography>
                         </Box>
+
                         <Link to='/login' className='text-decorator-none'>
                             <Box mx={5} className='cursor'>
                                 <Typography variant="h6" color="inherit">
@@ -48,6 +55,7 @@ function Navbar() {
                                 </Typography>
                             </Box>
                         </Link>
+
                     </Box>
 
                 </Toolbar>

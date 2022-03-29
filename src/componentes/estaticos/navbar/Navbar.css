@@ -1,11 +1,10 @@
 .barra{
-    background: #004b7cda!important;
-    
+    background: #004a7cc9!important;
 }
 
 .cursor{
-    cursor: pointer;
-    color: white;
+    cursor: pointer!important;
+    color: white!important;
 }
 
 .text-decorator-none{

@@ -1,14 +1,12 @@
 import React from "react";
 import { Typography, Box, Grid, Button } from '@material-ui/core';
+import TabPostagem from '../../componentes/postagens/tabpostagem/TabPostagem';
 import './Home.css';
 
 function Home() {
     return (
         <>
             <Grid container direction="row" justifyContent="center" alignItems="center" className="corpo">
-                <Grid xs={6} className='foto'>
-
-                </Grid>
                 <Grid alignItems="center" item xs={6}>
                     <Box paddingX={20} >
                         <Typography variant="h3" gutterBottom color="textPrimary" component="h3" align="center" className="titulo" >Olá!</Typography>
@@ -19,6 +17,13 @@ function Home() {
                         </Box>
                         <Button variant="outlined" className="botao" > 🖊️  Ver Postagens</Button>
                     </Box>
+                </Grid>
+
+                <Grid xs={6} className='foto'>
+                </Grid>
+
+                <Grid xs={12} className='postagens'>
+                    <TabPostagem />
                 </Grid>
 
 

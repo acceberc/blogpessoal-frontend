@@ -5,18 +5,22 @@ import './Home.css';
 import { useHistory } from 'react-router';
 import useLocalStorage from 'react-use-localstorage';
 import ModalPostagem from '../../componentes/postagens/modalPostagem/ModalPostagem';
+import { useSelector } from 'react-redux'
+import { UserState } from '../../store/tokens/userReducer'
 
 function Home() {
-    let history = useHistory();
-    const [token, setToken] = useLocalStorage('token');
-    
-    useEffect(() => {
-      if (token == "") {
-          alert("Você precisa estar logado")
-          history.push("/login")
+    let history = useHistory()
+
+    const token = useSelector<UserState, UserState["tokens"]>(
+      (state) => state.tokens
+    )
   
+    useEffect(() => {
+      if (token === "") {
+        alert("Você precisa estar logado")
+        history.push('/home')
       }
-  }, [token])
+    }, [token])
 
     return (
         <>

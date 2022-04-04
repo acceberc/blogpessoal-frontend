@@ -7,8 +7,8 @@ import './Navbar.css'
 function Navbar() {
     const [token, setToken] = useLocalStorage('token');
     let history = useHistory();
-    
-    function goLogout(){
+
+    function goLogout() {
         setToken('')
         alert("Usuário deslogado")
         history.push('/login')
@@ -57,15 +57,22 @@ function Navbar() {
                                     Novos temas
                                 </Typography>
                             </Box>
-                            </Link>
+                        </Link>
 
-                        
-                            <Box mx={5} className='cursor' onClick={goLogout}>
+                        <Link to="/perfil" className="text-decorator-none">
+                            <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="inherit">
-                                    Sair
+                                    Perfil
                                 </Typography>
                             </Box>
-                        
+                        </Link>
+
+                        <Box mx={5} className='cursor' onClick={goLogout}>
+                            <Typography variant="h6" color="inherit">
+                                Sair
+                            </Typography>
+                        </Box>
+
 
                     </Box>
 

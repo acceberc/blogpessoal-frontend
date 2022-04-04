@@ -1,22 +1,43 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Grid, Box, Typography, TextField, Button } from '@material-ui/core';
+import React, { ChangeEvent, useState, useEffect } from 'react'
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom';
-import useLocalStorage from 'react-use-localstorage';
-import { login } from '../../service/Service';
+import { useDispatch } from 'react-redux';
 import UserLogin from '../../model/UserLogin';
+import { login } from '../../service/Service';
+import { addId, addToken } from '../../store/tokens/action';
 import './Login.css';
 
 function Login() {
-    let history = useHistory();
-    const [token, setToken] = useLocalStorage('token');
+    let history = useHistory()
+
+    const dispatch = useDispatch()
+
+    const [token, setToken] = useState('')
+
     const [userLogin, setUserLogin] = useState<UserLogin>({
+        id: 0,
+        nome: "",
+        usuario: "",
+        senha: "",
+        foto: "",
+        token: ""
+    })
+
+    const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
         id: 0,
         nome: '',
         usuario: '',
         senha: '',
-        foto: '',
-        token: ''
+        token: '',
+        foto: ""
     })
+
+    useEffect(() => {
+        if (token !== "") {
+            dispatch(addToken(token))
+            history.push('/home')
+        }
+    }, [token])
 
     function updatedModel(e: ChangeEvent<HTMLInputElement>) {
         setUserLogin({
@@ -26,19 +47,26 @@ function Login() {
     }
 
     useEffect(() => {
-        if (token !== '') {
+        if (respUserLogin.token !== "") {
+
+            console.log("Token: " + respUserLogin.token)
+            console.log("ID: " + respUserLogin.id)
+
+            dispatch(addToken(respUserLogin.token))
+            dispatch(addId(respUserLogin.id.toString())) 
             history.push('/home')
         }
-    }, [token])
+    }, [respUserLogin.token])
 
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
-        e.preventDefault();
-        try {
-            await login(`/usuarios/login`, userLogin, setToken)
+        e.preventDefault()
 
-            alert('Usuário logado com sucesso!');
+        try {
+            await login(`/usuarios/login`, userLogin, setRespUserLogin)
+            alert("Usuário logado com sucesso")
+
         } catch (error) {
-            alert('Dados do usuário inconsistentes. Erro ao logar!');
+            alert("Dados do usuário inconsistentes")
         }
     }
 

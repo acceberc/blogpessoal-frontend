@@ -2,14 +2,22 @@ import React from 'react';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import {Typography, Box, Grid } from '@material-ui/core';
-
+import { Typography, Box, Grid } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { UserState } from '../../../store/tokens/userReducer';
 import './Footer.css'
 
-function Footer(){
-    return(
-        <>
-        <Grid container direction="row" justifyContent="center" alignItems="center">
+function Footer() {
+
+    const token = useSelector<UserState, UserState["tokens"]>(
+        (state) => state.tokens
+    )
+
+    var footerComponent
+
+    if (token !== "") {
+        footerComponent =
+            <Grid container direction="row" justifyContent="center" alignItems="center">
                 <Grid alignItems="center" item xs={12} >
                     <Box className="contatos">
                         <Box paddingTop={1} display="flex" alignItems="center" justifyContent="center">
@@ -39,6 +47,11 @@ function Footer(){
                     </Box>
                 </Grid>
             </Grid>
+    }
+
+    return (
+        <>
+            {footerComponent}
         </>
     )
 }

@@ -3,7 +3,8 @@ import { Button, Container, FormControl, FormHelperText, InputLabel, MenuItem, S
 import { useHistory, useParams } from 'react-router-dom'
 
 import { useSelector } from 'react-redux';
-import { UserState } from '../../../store/tokens/userReducer';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { toast } from 'react-toastify';
 
 import { busca, buscaId, post, put } from '../../../service/Service';
 import Tema from '../../../model/Tema'
@@ -13,37 +14,49 @@ import './CadastroPost.css'
 
 function CadastroPostagem() {
 
-    let history = useHistory()
+    let history = useHistory();
 
-    const { id } = useParams<{ id: string }>()
+    const { id } = useParams<{ id: string }>();
 
     const [temas, setTemas] = useState<Tema[]>([])
 
-    const token = useSelector<UserState, UserState["tokens"]>(
+        const token = useSelector<TokenState, TokenState["tokens"]>(
         (state) => state.tokens
+
+    //const token = store.token
     )
 
-    const [tema, setTema] = useState<Tema>({
-        id: 0,
-        descricao: ''
-    })
+    useEffect(() => {
+        if (token === "") {
+            toast.error("Você precisa estar logado", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
+            history.push("/login")
 
+        }
+    }, [token])
+
+    const [tema, setTema] = useState<Tema>(
+        {
+            id: 0,
+            descricao: ''
+        })
     const [postagem, setPostagem] = useState<Postagem>({
         id: 0,
         titulo: '',
         texto: '',
-        data:'',
+        data: '',
         tema: null
     })
 
-    useEffect(() => {
-        if (token === "") {
-            alert("Você precisa estar logado")
-            history.push("/login")
-        }
-    }, [token])
-
-    useEffect(() => {
+    useEffect(() => { 
         setPostagem({
             ...postagem,
             tema: tema
@@ -52,7 +65,7 @@ function CadastroPostagem() {
 
     useEffect(() => {
         getTemas()
-        if (id !== '') {
+        if (id !== undefined) {
             findByIdPostagem(id)
         }
     }, [id])
@@ -74,46 +87,59 @@ function CadastroPostagem() {
     }
 
     function updatedPostagem(e: ChangeEvent<HTMLInputElement>) {
+
         setPostagem({
             ...postagem,
             [e.target.name]: e.target.value,
             tema: tema
         })
+
     }
 
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault()
 
         if (id !== undefined) {
-            try {
-                await put(`/postagens`, postagem, setPostagem, {
-                    headers: {
-                        'Authorization': token
-                    }
-                })
-                alert('Postagem atualizada com sucesso');
-            } catch (error) {
-                alert("Erro ao atualizar, verifique os campos")
-            }
-
+            put(`/postagens`, postagem, setPostagem, {
+                headers: {
+                    'Authorization': token
+                }
+            })
+            toast.success('Postagem atualizada com sucesso', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
         } else {
-            try {
-                await post(`/postagens`, postagem, setPostagem, {
-                    headers: {
-                        'Authorization': token
-                    }
-                })
-                alert('Postagem cadastrada com sucesso');
-            } catch (error) {
-                alert("Erro ao cadastrar, verifique os campos")
-            }
+            post(`/postagens`, postagem, setPostagem, {
+                headers: {
+                    'Authorization': token
+                }
+            })
+            toast.success('Postagem cadastrada com sucesso', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
         }
         back()
+
     }
 
     function back() {
         history.push('/posts')
     }
+
 
     return (
         <Container maxWidth="sm" className="topo">

@@ -4,69 +4,67 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import UserLogin from '../../model/UserLogin';
 import { login } from '../../service/Service';
-import { addId, addToken } from '../../store/tokens/action';
+import { addToken } from '../../store/tokens/action';
 import './Login.css';
+import { toast } from 'react-toastify';
 
 function Login() {
-    let history = useHistory()
 
-    const dispatch = useDispatch()
-
-    const [token, setToken] = useState('')
+    let history = useHistory();
+    const [token, setToken] = useState('');
+    const dispatch = useDispatch();
+    dispatch(addToken(token))
 
     const [userLogin, setUserLogin] = useState<UserLogin>({
-        id: 0,
+        id:0,
         nome: "",
-        usuario: "",
-        senha: "",
+        usuario:"",
+        senha:"",
         foto: "",
-        token: ""
+        token:""
     })
-
-    const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
-        id: 0,
-        nome: '',
-        usuario: '',
-        senha: '',
-        token: '',
-        foto: ""
-    })
-
-    useEffect(() => {
-        if (token !== "") {
-            dispatch(addToken(token))
-            history.push('/home')
-        }
-    }, [token])
 
     function updatedModel(e: ChangeEvent<HTMLInputElement>) {
+
         setUserLogin({
             ...userLogin,
             [e.target.name]: e.target.value
         })
     }
 
-    useEffect(() => {
-        if (respUserLogin.token !== "") {
+        useEffect(()=> {
+            if(token !== "") {
+                history.push('/home')
+            }
+        }, [token])
 
-            console.log("Token: " + respUserLogin.token)
-            console.log("ID: " + respUserLogin.id)
+    async function onSubmit(e: ChangeEvent<HTMLFormElement>){
+        e.preventDefault();
 
-            dispatch(addToken(respUserLogin.token))
-            dispatch(addId(respUserLogin.id.toString())) 
-            history.push('/home')
-        }
-    }, [respUserLogin.token])
+        try{
+            await login(`/usuarios/login`, userLogin, setToken)
 
-    async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
-        e.preventDefault()
-
-        try {
-            await login(`/usuarios/login`, userLogin, setRespUserLogin)
-            alert("Usuário logado com sucesso")
-
-        } catch (error) {
-            alert("Dados do usuário inconsistentes")
+            toast.success('Usuário logado com sucesso!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
+        }catch(error){
+            toast.error("Dados do usuário inconsistentes, erro ao logar.", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
         }
     }
 

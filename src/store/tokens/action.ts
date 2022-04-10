@@ -1,12 +1,8 @@
-export type Action = {type: "ADD_TOKEN"|"ADD_ID"; payload: string}
+export type Action = { type : "ADD_Token"; payload: string}
 
-export const addToken = (token: string): Action => ({
-    type: "ADD_TOKEN",
-    payload: token 
-})
+export const addToken = (token:string): Action => ({
 
-// Adicione o tipo de ação para pegar o ID
-export const addId = (id: string): Action =>({
-    type: "ADD_ID",
-    payload: id 
+
+    type: "ADD_Token",
+    payload: token
 })

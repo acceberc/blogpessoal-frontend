@@ -14,11 +14,13 @@ import DeletarPostagem from './componentes/postagens/deletarPostagem/DeletarPost
 import DeletarTema from './componentes/temas/deletarTema/DeletarTema';
 import store from './store/store';
 import { Provider } from 'react-redux';
-import Perfil from './paginas/Perfil/Perfil';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <Provider store={store}>
+      <ToastContainer />
       <Router>
         <Navbar />
         <Switch>
@@ -65,10 +67,6 @@ function App() {
             </Route>
             <Route path='/deletarTema/:id'>
               <DeletarTema />
-            </Route>
-
-            <Route path='/perfil'>
-              <Perfil />
             </Route>
 
           </div>

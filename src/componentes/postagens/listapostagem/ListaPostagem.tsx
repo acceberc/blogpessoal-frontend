@@ -3,7 +3,7 @@ import { Box, Button, Card, CardActions, CardContent, Typography } from '@materi
 import { Link, useHistory } from 'react-router-dom'
 
 import { useSelector } from 'react-redux'
-import { UserState } from '../../../store/tokens/userReducer';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 
 import Postagem from '../../../model/Postagem'
 import { busca } from '../../../service/Service'
@@ -16,9 +16,10 @@ function ListaPostagem() {
 
   const [posts, setPost] = useState<Postagem[]>([])
 
-  const token = useSelector<UserState, UserState["tokens"]>(
+  const token = useSelector<TokenState, TokenState["tokens"]>(
     (state) => state.tokens
-  )
+
+)
 
   useEffect(() => {
     if (token === "") {
@@ -43,7 +44,7 @@ function ListaPostagem() {
     <>
       {posts.map(post => (
         <Box m={2} >
-          <Card variant="outlined">
+          <Card variant="outlined" className='cards'>
             <CardContent>
 
               <Typography color="textSecondary" gutterBottom>
@@ -77,7 +78,7 @@ function ListaPostagem() {
 
                 <Link to={`/deletarPostagem/${post.id}`} className="text-decorator-none">
                   <Box mx={1}>
-                    <Button variant="contained" size='small' color="secondary">
+                    <Button variant="contained" size='small' color="secondary" className='botao'>
                       Deletar
                     </Button>
                   </Box>

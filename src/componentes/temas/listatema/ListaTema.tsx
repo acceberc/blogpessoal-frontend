@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom'
-
 import { useSelector } from 'react-redux';
-import { UserState } from '../../../store/tokens/userReducer';
-
+import { TokenState } from '../../../store/tokens/tokensReducer';
 import Tema from '../../../model/Tema'
 import { busca } from '../../../service/Service'
-
 import './ListaTema.css'
 
 function ListaTema() {
@@ -16,8 +13,9 @@ function ListaTema() {
 
   const [temas, setTemas] = useState<Tema[]>([])
 
-  const token = useSelector<UserState, UserState["tokens"]>(
+  const token = useSelector<TokenState, TokenState["tokens"]>(
     (state) => state.tokens
+
 )
 
   useEffect(() => {
@@ -44,7 +42,7 @@ function ListaTema() {
       {
         temas.map(tema => (
           <Box m={2} >
-            <Card variant="outlined">
+            <Card variant="outlined" className='cards'>
               <CardContent>
 
                 <Typography color="textSecondary" gutterBottom>
@@ -70,7 +68,7 @@ function ListaTema() {
 
                   <Link to={`/deletarTema/${ tema.id }`} className="text-decorator-none">
                     <Box mx={1}>
-                      <Button variant="contained" size='small' color="secondary">
+                      <Button variant="contained" size='small' color="secondary" className='botao'>
                         Deletar
                       </Button>
                     </Box>

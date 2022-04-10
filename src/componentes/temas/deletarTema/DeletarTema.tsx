@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router-dom';
-
 import { useSelector } from 'react-redux';
-import { UserState } from '../../../store/tokens/userReducer';
-
+import { toast } from 'react-toastify';
 import Tema from '../../../model/Tema';
 import { buscaId, deleteId } from '../../../service/Service';
-
 import "./DeletarTema.css"
+import useLocalStorage from 'react-use-localstorage';
 
 function DeletarTema() {
 
     let history = useHistory();
-
-    const { id } = useParams<{ id: string }>();
-
-    const token = useSelector<UserState, UserState["tokens"]>(
-        (state) => state.tokens
-    )
-
+    const { id } = useParams<{id: string}>();
+    const [token, setToken] = useLocalStorage('token');
     const [tema, setTema] = useState<Tema>()
 
     useEffect(() => {
         if (token === "") {
-            alert("Você precisa estar logado")
+            toast.error("Você precisa estar logado", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
             history.push("/login")
 
         }
@@ -54,7 +56,16 @@ function DeletarTema() {
                 }
             });
             
-            alert('Tema deletado com sucesso');
+            toast.success('Tema deletado com sucesso', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
             
         } catch (error) {
             alert('Erro ao deletar');

@@ -4,24 +4,33 @@ import { Link, useHistory } from 'react-router-dom';
 import useLocalStorage from 'react-use-localstorage';
 import './Navbar.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { UserState } from '../../../store/tokens/userReducer';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 import { addToken } from '../../../store/tokens/action';
-
+import { toast } from 'react-toastify';
 
 function Navbar() {
     let history = useHistory()
 
     const dispatch = useDispatch()
 
-    const token = useSelector<UserState, UserState["tokens"]>(
+    const token = useSelector<TokenState, TokenState["tokens"]>(
         (state) => state.tokens
-    )
 
+    )
     function goLogout() {
-        dispatch(addToken(''))
-        alert("Usuário deslogado")
-        history.push("/login")
-    }
+        dispatch(addToken(""))
+        toast.info('Usuário deslogado', {
+          position: "top-right",
+          autoClose: 2000,   // 2 seg
+          hideProgressBar: false, 
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          theme: "colored",
+          progress: undefined,
+      })
+        history.push('/login')
+      }
 
     var navBarComponent
 
@@ -64,14 +73,6 @@ function Navbar() {
                             <Box mx={1} className='cursor'>
                                 <Typography variant="h6" color="inherit">
                                     Cadastrar Temas
-                                </Typography>
-                            </Box>
-                        </Link>
-
-                        <Link to="/perfil" className="text-decorator-none">
-                            <Box mx={1} className='cursor'>
-                                <Typography variant="h6" color="inherit">
-                                    Perfil
                                 </Typography>
                             </Box>
                         </Link>

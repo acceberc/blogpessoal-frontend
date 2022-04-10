@@ -4,13 +4,15 @@ import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Typography, Box, Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { UserState } from '../../../store/tokens/userReducer';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 import './Footer.css'
+
 
 function Footer() {
 
-    const token = useSelector<UserState, UserState["tokens"]>(
+    const token = useSelector<TokenState, TokenState["tokens"]>(
         (state) => state.tokens
+
     )
 
     var footerComponent
